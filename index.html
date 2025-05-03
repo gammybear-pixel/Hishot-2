@@ -438,6 +438,47 @@
         font-size: 1.1rem;
         line-height: 1.6;
     }
+    .faq-question {
+  background: none;
+  border: none;
+  width: 100%;
+  text-align: left;
+  font-size: 1.5rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+  color: var(--dark);
+  transition: color 0.3s;
+}
+
+.faq-question:hover {
+  color: var(--red);
+}
+
+.faq-answer {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease, opacity 0.4s ease;
+  opacity: 0;
+}
+
+.faq-item.active .faq-answer {
+  max-height: 300px;
+  opacity: 1;
+  margin-top: 1rem;
+}
+
+.faq-question .arrow {
+  transition: transform 0.3s ease;
+}
+
+.faq-item.active .arrow {
+  transform: rotate(180deg);
+}
+
     
     /* Study Tour Section */
     .tours {
@@ -699,22 +740,34 @@
     <h2>FREQUENTLY ASKED QUESTIONS</h2>
     <div class="faq-items">
         <div class="faq-item">
-            <h3>What is HISHOT?</h3>
-            <p>HISHOT is a community hub for game designers, developers, artists, and enthusiasts to learn, collaborate, and grow together in the field of game design.</p>
+          <button class="faq-question">
+            <span>What is HISHOT?</span>
+            <span class="arrow">▼</span>
+          </button>
+          <div class="faq-answer">
+            <p>HISHOT is a game design community dedicated to innovation, learning, and collaboration in the gaming industry.</p>
+          </div>
         </div>
         <div class="faq-item">
-            <h3>Who can join HISHOT?</h3>
-            <p>Anyone with an interest in game design or development can join our community - from beginners to professional game developers.</p>
+          <button class="faq-question">
+            <span>How can I join HISHOT?</span>
+            <span class="arrow">▼</span>
+          </button>
+          <div class="faq-answer">
+            <p>You can join HISHOT by clicking the “Get Started” button and filling out the registration form. Membership is open to all skill levels.</p>
+          </div>
         </div>
         <div class="faq-item">
-            <h3>Is it possible to join HISHOT online?</h3>
-            <p>Yes! We offer virtual memberships with access to online workshops, resources, and our community forums.</p>
+          <button class="faq-question">
+            <span>Are there any fees?</span>
+            <span class="arrow">▼</span>
+          </button>
+          <div class="faq-answer">
+            <p>Most HISHOT activities are free! Some workshops or special events may require a small fee to cover materials or guest speakers.</p>
+          </div>
         </div>
-        <div class="faq-item">
-            <h3>What are the benefits of joining HISHOT?</h3>
-            <p>Members get access to workshops, networking events, industry connections, collaborative opportunities, mentorship, and our state-of-the-art facilities.</p>
-        </div>
-    </div>
+      </div>
+      
 </section>
 
 <!-- Study Tour Section -->
@@ -784,6 +837,14 @@
         <p>Designed with ❤️ by HISHOT Team</p>
     </div>
 </footer>
-    
+<script>
+    document.querySelectorAll('.faq-question').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const faqItem = btn.closest('.faq-item');
+        faqItem.classList.toggle('active');
+      });
+    });
+  </script>
+  
 </body>
 </html>
