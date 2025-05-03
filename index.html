@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+    :root {
+        --red: #d15d5c;
+        --yellow: #f4b942;
+        --green: #4d9862;
+        --blue: #4d7dc2;
+        --pink: #f0b8b8;
+        --dark: #222222;
+        --light: #f5f1e8;
+    }
+    
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    
+    body {
+        font-family: 'Montserrat', sans-serif;
+        background-color: var(--light);
+        color: var(--dark);
+        overflow-x: hidden;
+    }
+    
+    /* Navigation */
+    nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.5rem 2rem;
+        background-color: rgba(245, 241, 232, 0.95);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+    }
+    
+    .logo {
+        font-size: 2rem;
+        font-weight: 800;
+        color: var(--red);
+        text-decoration: none;
+        display: flex;
+        align-items: center;
+    }
+    
+    .logo img {
+        height: 40px;
+        margin-right: 10px;
+    }
+    
+    .nav-links {
+        display: flex;
+        gap: 2rem;
+    }
+    
+    .nav-links a {
+        text-decoration: none;
+        color: var(--dark);
+        font-weight: 600;
+        transition: color 0.3s;
+        position: relative;
+    }
+    
+    .nav-links a:hover {
+        color: var(--red);
+    }
+    
+    .nav-links a::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: -5px;
+        left: 0;
+        background-color: var(--red);
+        transition: width 0.3s;
+    }
+    
+    .nav-links a:hover::after {
+        width: 100%;
+    }
+    
+    .cta-button {
+        background-color: var(--red);
+        color: white;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 50px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+    
+    .cta-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(209, 93, 92, 0.4);
+    }
+    
+    /* Hero Section */
+    .hero {
+        height: 90vh;
+        display: flex;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .hero-content {
+        width: 50%;
+        padding: 6rem 4rem;
+        position: relative;
+        z-index: 2;
+    }
+    
+    .hero h1 {
+        font-size: 5rem;
+        line-height: 1;
+        margin-bottom: 2rem;
+        font-weight: 800;
+        background: linear-gradient(45deg, var(--red), var(--yellow));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+    
+    .hero p {
+        font-size: 1.2rem;
+        margin-bottom: 2.5rem;
+        max-width: 80%;
+    }
+    
+    .hero-visual {
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 60%;
+        height: 100%;
+        background: url('/api/placeholder/800/600') center center/cover;
+        clip-path: polygon(15% 0, 100% 0, 100% 100%, 0% 100%);
+    }
+    
+    .doodle-overlay {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        background: url('/api/placeholder/400/400') repeat;
+        opacity: 0.1;
+        z-index: 1;
+    }
+    
+    .floating-assets {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 2;
+    }
+    
+    .game-asset {
+        position: absolute;
+        animation: float 6s ease-in-out infinite;
+    }
+    
+    .game-asset:nth-child(1) {
+        top: 20%;
+        right: 10%;
+        animation-delay: 0s;
+    }
+    
+    .game-asset:nth-child(2) {
+        bottom: 30%;
+        right: 20%;
+        animation-delay: 2s;
+    }
+    
+    .game-asset:nth-child(3) {
+        top: 60%;
+        right: 30%;
+        animation-delay: 4s;
+    }
+    
+    @keyframes float {
+        0% { transform: translateY(0) rotate(0deg); }
+        50% { transform: translateY(-20px) rotate(5deg); }
+        100% { transform: translateY(0) rotate(0deg); }
+    }
+    
+    /* About Section */
+    .about {
+        padding: 8rem 4rem;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4rem;
+        position: relative;
+    }
+    
+    .about::before {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100px;
+        top: -50px;
+        left: 0;
+        background-color: var(--light);
+        transform: skewY(-2deg);
+        z-index: -1;
+    }
+    
+    .about h2 {
+        font-size: 3.5rem;
+        margin-bottom: 2rem;
+        font-weight: 800;
+        color: var(--green);
+    }
+    
+    .about p {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        margin-bottom: 1.5rem;
+    }
+    
+    .about-image {
+        position: relative;
+        height: 100%;
+        width: 100%;
+        overflow: hidden;
+        border-radius: 20px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    }
+    
+    .about-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s;
+    }
+    
+    .about-image:hover img {
+        transform: scale(1.05);
+    }
+    
+    /* Events Section */
+    .events {
+        padding: 8rem 4rem;
+        background-color: var(--blue);
+        color: white;
+        position: relative;
+    }
+    
+    .events::before {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100px;
+        top: -50px;
+        left: 0;
+        background-color: var(--blue);
+        transform: skewY(2deg);
+        z-index: -1;
+    }
+    
+    .events h2 {
+        font-size: 3.5rem;
+        text-align: center;
+        margin-bottom: 4rem;
+        font-weight: 800;
+    }
+    
+    .event-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+    }
+    
+    .event-card {
+        background-color: white;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        transition: transform 0.3s;
+    }
+    
+    .event-card:hover {
+        transform: translateY(-10px);
+    }
+    
+    .event-image {
+        height: 200px;
+        overflow: hidden;
+    }
+    
+    .event-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s;
+    }
+    
+    .event-card:hover .event-image img {
+        transform: scale(1.1);
+    }
+    
+    .event-content {
+        padding: 2rem;
+        color: var(--dark);
+    }
+    
+    .event-content h3 {
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
+        color: var(--blue);
+    }
+    
+    .event-content p {
+        margin-bottom: 1.5rem;
+    }
+    
+    .event-content .button {
+        display: inline-block;
+        padding: 0.75rem 1.5rem;
+        background-color: var(--blue);
+        color: white;
+        text-decoration: none;
+        border-radius: 50px;
+        font-weight: 600;
+        transition: background-color 0.3s;
+    }
+    
+    .event-content .button:hover {
+        background-color: var(--green);
+    }
+    
+    /* Location Section */
+    .location {
+        padding: 8rem 4rem;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4rem;
+    }
+    
+    .location h2 {
+        font-size: 3.5rem;
+        margin-bottom: 2rem;
+        font-weight: 800;
+        color: var(--yellow);
+    }
+    
+    .location-details {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    
+    .address {
+        margin-bottom: 2rem;
+    }
+    
+    .address h3 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        color: var(--dark);
+    }
+    
+    .address p {
+        font-size: 1.1rem;
+        line-height: 1.6;
+        margin-bottom: 0.5rem;
+    }
+    
+    .map {
+        width: 100%;
+        height: 100%;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+    }
+    
+    .map img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    
+    /* FAQ Section */
+    .faq {
+        padding: 8rem 4rem;
+        background-color: var(--yellow);
+        position: relative;
+    }
+    
+    .faq::before {
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100px;
+        top: -50px;
+        left: 0;
+        background-color: var(--yellow);
+        transform: skewY(-2deg);
+        z-index: -1;
+    }
+    
+    .faq h2 {
+        font-size: 3.5rem;
+        text-align: center;
+        margin-bottom: 4rem;
+        font-weight: 800;
+        color: var(--dark);
+    }
+    
+    .faq-items {
+        max-width: 800px;
+        margin: 0 auto;
+    }
+    
+    .faq-item {
+        background-color: white;
+        border-radius: 15px;
+        padding: 2rem;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+    
+    .faq-item h3 {
+        font-size: 1.5rem;
+        margin-bottom: 1rem;
+        color: var(--dark);
+    }
+    
+    .faq-item p {
+        font-size: 1.1rem;
+        line-height: 1.6;
+    }
+    
+    /* Study Tour Section */
+    .tours {
+        padding: 8rem 4rem;
+    }
+    
+    .tours h2 {
+        font-size: 3.5rem;
+        text-align: center;
+        margin-bottom: 1rem;
+        font-weight: 800;
+        color: var(--dark);
+    }
+    
+    .tours h3 {
+        font-size: 1.8rem;
+        text-align: center;
+        margin-bottom: 4rem;
+        color: var(--red);
+    }
+    
+    .tour-types {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4rem;
+    }
+    
+    .tour-type {
+        position: relative;
+        border-radius: 20px;
+        overflow: hidden;
+        height: 400px;
+        box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+    }
+    
+    .tour-type img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s;
+    }
+    
+    .tour-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        padding: 2rem;
+        background: linear-gradient(transparent, rgba(0,0,0,0.8));
+        color: white;
+    }
+    
+    .tour-overlay h4 {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+    }
+    
+    .tour-overlay p {
+        font-size: 1.1rem;
+        margin-bottom: 1.5rem;
+    }
+    
+    .tour-overlay .button {
+        display: inline-block;
+        padding: 0.75rem 1.5rem;
+        background-color: var(--red);
+        color: white;
+        text-decoration: none;
+        border-radius: 50px;
+        font-weight: 600;
+        transition: background-color 0.3s;
+    }
+    
+    .tour-overlay .button:hover {
+        background-color: var(--yellow);
+        color: var(--dark);
+    }
+    
+    /* Footer */
+    footer {
+        background-color: var(--dark);
+        color: white;
+        padding: 4rem;
+    }
+    
+    .footer-content {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 3rem;
+        margin-bottom: 3rem;
+    }
+    
+    .footer-logo {
+        font-size: 2rem;
+        font-weight: 800;
+        color: white;
+        margin-bottom: 1.5rem;
+    }
+    
+    .footer-info p {
+        margin-bottom: 1rem;
+        line-height: 1.6;
+    }
+    
+    .footer-links h4 {
+        font-size: 1.2rem;
+        margin-bottom: 1.5rem;
+        position: relative;
+        padding-bottom: 0.5rem;
+    }
+    
+    .footer-links h4::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 50px;
+        height: 2px;
+        background-color: var(--red);
+    }
+    
+    .footer-links ul {
+        list-style: none;
+    }
+    
+    .footer-links li {
+        margin-bottom: 0.75rem;
+    }
+    
+    .footer-links a {
+        color: #ccc;
+        text-decoration: none;
+        transition: color 0.3s;
+    }
+    
+    .footer-links a:hover {
+        color: var(--red);
+    }
+    
+    .footer-bottom {
+        text-align: center;
+        padding-top: 2rem;
+        border-top: 1px solid #444;
+    }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <a href="#" class="logo">
+            <img src="/api/placeholder/40/40" alt="Hishot Logo">
+            HISHOT
+        </a>
+        <div class="nav-links">
+            <a href="#">Home</a>
+            <a href="#">About</a>
+            <a href="#">Events</a>
+            <a href="#">Tours</a>
+            <a href="#">FAQ</a>
+        </div>
+        <button class="cta-button">Get Started</button>
+    </nav>
+
+<!-- Hero Section -->
+<section class="hero">
+    <div class="doodle-overlay"></div>
+    <div class="hero-content">
+        <h1>HISHOT 2025</h1>
+        <p>Game design hub where creativity meets technology. Join our community of innovators, designers, and developers to shape the future of gaming.</p>
+        <button class="cta-button">Explore Now</button>
+    </div>
+    <div class="hero-visual"></div>
+    <div class="floating-assets">
+        <img src="/api/placeholder/80/80" alt="Game Controller" class="game-asset">
+        <img src="/api/placeholder/60/60" alt="Game Character" class="game-asset">
+        <img src="/api/placeholder/70/70" alt="Game Item" class="game-asset">
+    </div>
+</section>
+
+<!-- About Section -->
+<section class="about">
+    <div>
+        <h2>ABOUT HISHOT</h2>
+        <p>HISHOT is a premier game design community founded in 2020. We're dedicated to nurturing the next generation of game developers through hands-on workshops, industry connections, and collaborative projects.</p>
+        <p>With a focus on innovation and creativity, we provide resources, mentorship, and opportunities for designers at all skill levels to grow their talents and expand their knowledge.</p>
+        <p>Our community brings together passionate individuals from diverse backgrounds, creating a vibrant ecosystem where ideas flourish and groundbreaking games are born.</p>
+    </div>
+    <div class="about-image">
+        <img src="/api/placeholder/600/600" alt="Game Design Workshop">
+    </div>
+</section>
+
+<!-- Events Section -->
+<section class="events">
+    <h2>EVENTS</h2>
+    <div class="event-cards">
+        <div class="event-card">
+            <div class="event-image">
+                <img src="/api/placeholder/400/400" alt="Game Jam">
+            </div>
+            <div class="event-content">
+                <h3>Game Jam</h3>
+                <p>48-hour creative marathon where teams collaborate to build innovative games from scratch based on surprise themes.</p>
+                <a href="#" class="button">Learn More</a>
+            </div>
+        </div>
+        <div class="event-card">
+            <div class="event-image">
+                <img src="/api/placeholder/400/400" alt="Workshops">
+            </div>
+            <div class="event-content">
+                <h3>Workshops</h3>
+                <p>Hands-on sessions led by industry professionals covering game design, development, art, sound, and more.</p>
+                <a href="#" class="button">Learn More</a>
+            </div>
+        </div>
+        <div class="event-card">
+            <div class="event-image">
+                <img src="/api/placeholder/400/400" alt="Study Tour">
+            </div>
+            <div class="event-content">
+                <h3>Study Tour</h3>
+                <p>Visit leading game studios, meet developers, and gain insider knowledge about the game industry.</p>
+                <a href="#" class="button">Learn More</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Location Section -->
+<section class="location">
+    <div class="location-details">
+        <h2>LOCATION</h2>
+        <div class="address">
+            <h3>Address</h3>
+            <p>HISHOT Design Hub</p>
+            <p>123 Creative Plaza, Gaming District</p>
+            <p>City, Country 12345</p>
+        </div>
+        <div class="address">
+            <h3>Opening Hours</h3>
+            <p>Monday - Friday: 9AM - 6PM</p>
+            <p>Saturday: 10AM - 4PM</p>
+            <p>Sunday: Closed</p>
+        </div>
+        <div class="address">
+            <h3>Contact</h3>
+            <p>Phone: +123 456 7890</p>
+            <p>Email: info@hishot.com</p>
+        </div>
+    </div>
+    <div class="map">
+        <img src="/api/placeholder/800/600" alt="Map Location">
+    </div>
+</section>
+
+<!-- FAQ Section -->
+<section class="faq">
+    <h2>FREQUENTLY ASKED QUESTIONS</h2>
+    <div class="faq-items">
+        <div class="faq-item">
+            <h3>What is HISHOT?</h3>
+            <p>HISHOT is a community hub for game designers, developers, artists, and enthusiasts to learn, collaborate, and grow together in the field of game design.</p>
+        </div>
+        <div class="faq-item">
+            <h3>Who can join HISHOT?</h3>
+            <p>Anyone with an interest in game design or development can join our community - from beginners to professional game developers.</p>
+        </div>
+        <div class="faq-item">
+            <h3>Is it possible to join HISHOT online?</h3>
+            <p>Yes! We offer virtual memberships with access to online workshops, resources, and our community forums.</p>
+        </div>
+        <div class="faq-item">
+            <h3>What are the benefits of joining HISHOT?</h3>
+            <p>Members get access to workshops, networking events, industry connections, collaborative opportunities, mentorship, and our state-of-the-art facilities.</p>
+        </div>
+    </div>
+</section>
+
+<!-- Study Tour Section -->
+<section class="tours">
+    <h2>STUDY TOURS</h2>
+    <h3>Experience Game Design Around the World</h3>
+    <div class="tour-types">
+        <div class="tour-type">
+            <img src="/api/placeholder/800/800" alt="International Tour">
+            <div class="tour-overlay">
+                <h4>INTERNATIONAL STUDY TOUR</h4>
+                <p>Explore leading game studios across Japan, USA, and Europe.</p>
+                <a href="#" class="button">Learn More</a>
+            </div>
+        </div>
+        <div class="tour-type">
+            <img src="/api/placeholder/800/800" alt="Domestic Tour">
+            <div class="tour-overlay">
+                <h4>DOMESTIC STUDY TOUR</h4>
+                <p>Visit local game companies and meet industry professionals.</p>
+                <a href="#" class="button">Learn More</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer>
+    <div class="footer-content">
+        <div class="footer-info">
+            <div class="footer-logo">HISHOT</div>
+            <p>Building the future of game design through community, creativity, and innovation.</p>
+            <p>© 2025 HISHOT. All rights reserved.</p>
+        </div>
+        <div class="footer-links">
+            <h4>Quick Links</h4>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Events</a></li>
+                <li><a href="#">Tours</a></li>
+                <li><a href="#">FAQ</a></li>
+            </ul>
+        </div>
+        <div class="footer-links">
+            <h4>Resources</h4>
+            <ul>
+                <li><a href="#">Tutorials</a></li>
+                <li><a href="#">Blog</a></li>
+                <li><a href="#">Community</a></li>
+                <li><a href="#">Membership</a></li>
+                <li><a href="#">Support</a></li>
+            </ul>
+        </div>
+        <div class="footer-links">
+            <h4>Connect</h4>
+            <ul>
+                <li><a href="#">Instagram</a></li>
+                <li><a href="#">Twitter</a></li>
+                <li><a href="#">Discord</a></li>
+                <li><a href="#">YouTube</a></li>
+                <li><a href="#">LinkedIn</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>Designed with ❤️ by HISHOT Team</p>
+    </div>
+</footer>
+    
+</body>
+</html>
